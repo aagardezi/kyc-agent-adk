@@ -29,10 +29,10 @@ The project features a `global_kyc_agent` root router that delegates to either t
 
 ```mermaid
 graph TD
-    Root([global_kyc_agent<br/>Global Router])
+    Root(["global_kyc_agent<br/>Global Router"])
     
-    UKAgent[uk_kyc_agent<br/>(Companies House)]
-    USAAgent[usa_kyc_agent<br/>(SEC/EDGAR)]
+    UKAgent["uk_kyc_agent<br/>(Companies House)"]
+    USAAgent["usa_kyc_agent<br/>(SEC/EDGAR)"]
     
     Root -->|"UK Company Query"| UKAgent
     Root -->|"US Company Query"| USAAgent
@@ -45,9 +45,9 @@ graph TD
     %% US Workflow
     USAAgent --> USSeqAgent["sequential_agent"]
     USSeqAgent --> USDataRet["data_retrieval_agent<br/>(SEC Master)"]
-    USDataRet --> SECSearch[sec_search_agent]
-    USDataRet --> SECFiling[sec_filing_agent]
-    USDataRet --> SECInsider[sec_insider_agent]
+    USDataRet --> SECSearch["sec_search_agent"]
+    USDataRet --> SECFiling["sec_filing_agent"]
+    USDataRet --> SECInsider["sec_insider_agent"]
 ```
 
 ## C. Setup & Execution
