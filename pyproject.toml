@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kyc-agent-adk"
+version = "0.1.0"
+description = "A Global KYC Agent built using Google ADK."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "google-adk[eval]",
+    "companies-house-api-lib==0.4",
+    "requests",
+    "google-cloud-secret-manager",
+    "google-auth",
+    "beautifulsoup4"
+]
