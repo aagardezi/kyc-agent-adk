@@ -59,7 +59,7 @@ graph TD
    ```bash
    git clone https://github.com/your-username/kyc-agent-adk.git
    cd kyc-agent-adk
-   pip install -r requirements.txt
+   uv sync --dev
    ```
 3. **Set up API Keys:**
    Copy the example environment variables file and configure it:
@@ -85,6 +85,32 @@ Alternatively, you can test it directly within the robust, built-in ADK Web UI:
 adk web
 ```
 This will open a new tab in your web browser with the ADK UI, allowing you to trace execution flows, tool trajectories, and test variables.
+
+### Alternative: Using Agent Starter Pack
+
+You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+
+```bash
+# Create and activate a virtual environment
+python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
+
+# Install the starter pack and create your project
+pip install --upgrade agent-starter-pack
+agent-starter-pack create global-kyc-agent -a adk@global_kyc_agent
+```
+
+<details>
+<summary>⚡️ Alternative: Using uv</summary>
+
+If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
+```bash
+uvx agent-starter-pack create global-kyc-agent -a adk@global_kyc_agent
+```
+This command handles creating the project without needing to pre-install the package into a virtual environment.
+
+</details>
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 ## D. Customization & Extension
 

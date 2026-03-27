@@ -4,7 +4,11 @@ import requests
 
 PROJECT_ID = helpercode.get_project_id()
 
-chclient = CompaniesHouseClient(api_key=helpercode.access_secret_version(PROJECT_ID, "CompaniesHouseAPIKey"))
+try:
+    chclient = CompaniesHouseClient(api_key=helpercode.access_secret_version(PROJECT_ID, "CompaniesHouseAPIKey"))
+except Exception as e:
+    chclient = None
+    print(f"Warning: Failed to initialize CompaniesHouseClient: {e}")
 
 def search_companies(search_query:str):
     """

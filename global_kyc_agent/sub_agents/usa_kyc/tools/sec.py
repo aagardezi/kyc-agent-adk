@@ -4,7 +4,11 @@ from google.adk.tools.function_tool import FunctionTool
 from global_kyc_agent.shared_libraries import helpercode
 
 PROJECT_ID = helpercode.get_project_id()
-SEC_API_KEY = helpercode.access_secret_version(PROJECT_ID, "SECAPIKey")
+try:
+    SEC_API_KEY = helpercode.access_secret_version(PROJECT_ID, "SECAPIKey")
+except Exception as e:
+    SEC_API_KEY = None
+    print(f"Warning: Failed to access SECAPIKey secret: {e}")
 
 def full_text_search(query: str, start_date: str, end_date: str) -> str:
     """

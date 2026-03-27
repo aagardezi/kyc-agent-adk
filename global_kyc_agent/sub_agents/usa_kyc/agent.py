@@ -24,13 +24,17 @@ from google import genai
 from google.adk.models import google_llm
 from global_kyc_agent.shared_libraries import helpercode
 
-api_client = genai.Client(
-    vertexai=True,
-    project=helpercode.get_project_id(),
-    location="global"
-)
 model = google_llm.Gemini(model=config.gemini_model)
-model.api_client= api_client 
+try:
+    api_client = genai.Client(
+        vertexai=True,
+        project=helpercode.get_project_id(),
+        location="global"
+    )
+    model.api_client= api_client 
+except Exception as e:
+    api_client = None
+    print(f"Warning: Failed to initialize genai.Client: {e}")
 
 def get_current_date() -> str:
     """Returns the current date in YYYY-MM-DD format."""
