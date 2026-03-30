@@ -61,17 +61,22 @@ graph TD
    cd kyc-agent-adk
    uv sync --dev
    ```
-3. **Set up API Keys:**
+3. **Set up Authentication & Configuration:**
    Copy the example environment variables file and configure it:
    ```bash
    cp .env.example .env
    ```
-   *Required Keys:*
-   - `GEMINI_API_KEY`: For Google Gemini model access.
+   
+   The agent utilizes **Vertex AI** for Gemini access. Instead of an API key, you must authenticate using Google Cloud Application Default Credentials (ADC):
+   ```bash
+   gcloud auth login
+   gcloud auth application-default login
+   ```
+   
+   *Required Keys/Vars in `.env`:*
+   - `GOOGLE_CLOUD_PROJECT`: Set this to your Google Cloud Project ID.
    - `COMPANIES_HOUSE_API_KEY`: For UK agent data components.
    - `SEC_API_KEY`: For US agent data components.
-   
-   *(Note: The agent also supports retrieving keys from Google Cloud Secret Manager if Application Default Credentials are configured or Vertex AI Agent Engine is utilized).*
 
 ### Running the Agent
 
@@ -143,7 +148,21 @@ Custom debugging scripts are included at the root to process outputs during test
 
 For the agent to be deployable, follow the instructions [here](https://cloud.google.com/vertex-ai/generative-ai/docs/agent-engine/deploy-agent). 
 
-To deploy the unified agent construct to Google Cloud's Vertex AI AgentEngine directly using the ADK CLI:
+To deploy the unified agent construct to Google Cloud's Vertex AI Agent Engine directly using the ADK CLI:
 ```bash
 adk deploy --project YOUR_PROJECT_ID --agent global_kyc_agent.agent:root_agent --name global-kyc-agent
 ```
+
+### Using a Service Account for Deployment
+
+To deploy using a dedicated Service Account (e.g., in a CI/CD pipeline or for restricted access), authenticate with the Service Account before running the deploy command:
+
+```bash
+# 1. Activate the Service Account
+gcloud auth activate-service-account --key-file=/path/to/your/service-account-key.json
+
+# 2. Run the deployment
+adk deploy --project YOUR_PROJECT_ID --agent global_kyc_agent.agent:root_agent --name global-kyc-agent
+```
+
+Ensure the Service Account holds the required permissions for Vertex AI Agent Engine deployment (e.g., `roles/aiplatform.admin`, `roles/compute.admin`, or custom roles for Reasoning Engines).
